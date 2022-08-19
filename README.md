@@ -5,6 +5,7 @@ A popular movie app that dispplays basic movie infomation
  - Kotlin
  - Paging 3.0
  - Room Database
+ - Hilt
 
 ### NOTE
 Add your API_KEY to local.properties file and build the app
