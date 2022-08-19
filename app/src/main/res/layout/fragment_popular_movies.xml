@@ -10,7 +10,7 @@
         android:id="@+id/moviesRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="16dp"
+        android:padding="@dimen/dimen_8dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="2"
         tools:itemCount="20"
+        android:clipToPadding="false"
         tools:listitem="@layout/layout_movie_item" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

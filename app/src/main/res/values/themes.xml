@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.App.SnackbarText</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -26,8 +27,11 @@
 
     <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
-        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.App.SnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="fontFamily">@font/ttcommons_medium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="ThemeOverlay.App.Snackbar" parent="">

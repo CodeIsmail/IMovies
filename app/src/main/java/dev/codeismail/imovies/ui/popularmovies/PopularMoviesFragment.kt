@@ -17,6 +17,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import dev.codeismail.imovies.R
 import dev.codeismail.imovies.databinding.FragmentPopularMoviesBinding
+import dev.codeismail.imovies.util.MovieItemDecorator
 import dev.codeismail.imovies.util.gone
 import dev.codeismail.imovies.util.navigate
 import dev.codeismail.imovies.util.show
@@ -48,6 +49,7 @@ class PopularMoviesFragment : Fragment() {
         binding.moviesRV.apply {
             adapter = pagingAdapter
             setHasFixedSize(true)
+            addItemDecoration(MovieItemDecorator(requireContext(), R.dimen.dimen_8dp))
         }
 
         pagingAdapter.setOnItemClickListener {
