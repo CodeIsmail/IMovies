@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 interface IMoviesRepository{
     fun getPopularMovies(): Flow<PagingData<Movie>>
+    suspend fun getMovieById(movieId: String): Movie?
 }
 
 class IMoviesRepositoryImpl @Inject constructor(
@@ -32,6 +33,10 @@ class IMoviesRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow
+    }
+
+    override suspend fun getMovieById(movieId: String) : Movie?{
+        return appDatabase.movieDao().getMovieById(movieId)
     }
 
     companion object {

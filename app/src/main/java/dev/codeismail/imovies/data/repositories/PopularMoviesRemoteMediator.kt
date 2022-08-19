@@ -77,7 +77,9 @@ class PopularMoviesRemoteMediator (
                         }
                         val champions = remoteMovies.map {movie->
 
-                            Movie("${movie.id}", movie.originalTitle, movie.posterPath, movie.voteAverage)
+                            Movie("${movie.id}", movie.originalTitle, movie.posterPath,
+                                movie.backdropPath?: "N/A", movie.releaseDate, movie.overview,
+                                movie.voteAverage)
                         }
                         remoteKeysDao.insertAll(keys)
                         popularMovieDao.insertAll(champions)
@@ -87,7 +89,6 @@ class PopularMoviesRemoteMediator (
                         endOfPaginationReached = endOfPaginationReached
                     )
                 }else{
-                    val code = response.code()
                     MediatorResult.Error(Exception(response.message()))
                 }
             } catch (e: IOException) {
@@ -99,21 +100,17 @@ class PopularMoviesRemoteMediator (
         }
 
         private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Movie>): RemoteKeys? {
-            // Get the last page that was retrieved, that contained items.
-            // From that last page, get the last item
+
             return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
                 ?.let { movie ->
-                    // Get the remote keys of the last item retrieved
                     appDatabase.remoteKeysDao().remoteKeysChampionId(movie.id)
                 }
         }
 
         private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Movie>): RemoteKeys? {
-            // Get the first page that was retrieved, that contained items.
-            // From that first page, get the first item
+
             return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
                 ?.let { movie ->
-                    // Get the remote keys of the first items retrieved
                     appDatabase.remoteKeysDao().remoteKeysChampionId(movie.id)
                 }
         }
@@ -121,8 +118,6 @@ class PopularMoviesRemoteMediator (
         private suspend fun getRemoteKeyClosestToCurrentPosition(
             state: PagingState<Int, Movie>
         ): RemoteKeys? {
-            // The paging library is trying to load data after the anchor position
-            // Get the item closest to the anchor position
             return state.anchorPosition?.let { position ->
                 state.closestItemToPosition(position)?.id?.let { id ->
                     appDatabase.remoteKeysDao().remoteKeysChampionId(id)

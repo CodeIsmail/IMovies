@@ -24,7 +24,7 @@ android {
 
         buildConfigField "String", "API_KEY", localProperties['API_KEY']
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-        buildConfigField "String", "MOVIE_POSTER_BASEURL", "\"https://image.tmdb.org/t/p/w185/\""
+        buildConfigField "String", "MOVIE_POSTER_BASEURL", "\"https://image.tmdb.org/t/p/\""
     }
 
     buildTypes {

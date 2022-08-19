@@ -24,4 +24,13 @@
         <item name="colorPrimary">@color/secondaryLightColor</item>
         <item name="colorOnSurface">@color/secondaryDarkColor</item>
     </style>
+
+    <style name="ShapeAppearanceCardView" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/dimen_10dp</item>
+        <item name="cornerSizeTopRight">@dimen/dimen_10dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/dimen_0dp</item>
+        <item name="cornerSizeBottomRight">@dimen/dimen_0dp</item>
+    </style>
 </resources>

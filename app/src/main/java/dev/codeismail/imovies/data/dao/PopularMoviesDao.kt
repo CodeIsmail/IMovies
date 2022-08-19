@@ -15,6 +15,9 @@ interface PopularMoviesDao {
     @Query("SELECT * FROM movies")
     fun getAllMovies(): PagingSource<Int, Movie>
 
+    @Query("SELECT * FROM movies WHERE id = :movieId")
+    suspend fun getMovieById(movieId: String): Movie?
+
     @Query("DELETE FROM movies")
     suspend fun clearAll()
 

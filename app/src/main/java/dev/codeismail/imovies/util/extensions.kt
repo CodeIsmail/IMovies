@@ -27,3 +27,7 @@ fun Fragment.navigate(directions: NavDirections) {
         controller.navigate(directions)
     }
 }
+
+fun Fragment.navigateBack(){
+    findNavController().popBackStack()
+}

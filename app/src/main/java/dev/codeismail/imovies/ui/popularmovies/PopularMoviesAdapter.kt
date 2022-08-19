@@ -10,6 +10,8 @@ import dev.codeismail.imovies.BuildConfig
 import dev.codeismail.imovies.R
 import dev.codeismail.imovies.data.models.Movie
 import dev.codeismail.imovies.databinding.LayoutMovieItemBinding
+import dev.codeismail.imovies.util.TOP_RATING_TARGET
+import dev.codeismail.imovies.util.WIDTH185_URL
 import dev.codeismail.imovies.util.hide
 import dev.codeismail.imovies.util.show
 
@@ -67,11 +69,11 @@ PagingDataAdapter<Movie, PopularMoviesAdapter.MovieViewHolder>(diffCallback) {
 
 
         fun bind(movie: Movie) {
-            bnd.posterImageView.load(BuildConfig.MOVIE_POSTER_BASEURL + movie.posterUrl) {
+            bnd.posterImageView.load(BuildConfig.MOVIE_POSTER_BASEURL + WIDTH185_URL + movie.posterUrl) {
                 crossfade(true)
                 placeholder(R.drawable.ic_place_holder)
             }
-            if (movie.voteAverage >= 8.0){
+            if (movie.voteAverage >= TOP_RATING_TARGET){
                 bnd.voteAveImageView.show()
             }else{
                 bnd.voteAveImageView.hide()
