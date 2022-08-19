@@ -9,3 +9,6 @@ A popular movie app that dispplays basic movie infomation
 ### NOTE
 Add your API_KEY to local.properties file and build the app
 ```API_KEY = "YOUR_API_KEY"```
+
+### TODO
+ - Write test.
