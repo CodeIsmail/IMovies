@@ -26,8 +26,6 @@ class AuthInterceptor @Inject constructor(private val context: Context) : Interc
             url(httpUrl)
 
         }.build()
-        val d = request.url.toString()
-        Log.d("Hello", d)
         val response: Response
         try {
             response = chain.proceed(request)

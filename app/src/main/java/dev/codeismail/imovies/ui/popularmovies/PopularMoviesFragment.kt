@@ -10,12 +10,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import dev.codeismail.imovies.R
 import dev.codeismail.imovies.databinding.FragmentPopularMoviesBinding
+import dev.codeismail.imovies.util.gone
 import dev.codeismail.imovies.util.navigate
+import dev.codeismail.imovies.util.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -59,18 +63,36 @@ class PopularMoviesFragment : Fragment() {
             true
         }
 
-        viewModel.actionGetMovies()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.uiState.collectLatest {
-                    if(!it.isLoading){
-//                        bnd.loadingView.gone()
-//                        bnd.championsRecyclerView.show()
-                        pagingAdapter.submitData(it.movies)
-//                        handleError(it.userMessages)
+                viewModel.popularMovies.collectLatest {
+                    pagingAdapter.submitData(it)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+
+                pagingAdapter.loadStateFlow.collectLatest { state ->
+                    when (state.refresh) {
+                        is LoadState.NotLoading -> {
+                            binding.progressBar.gone()
+                            binding.moviesRV.show()
+                        }
+                        is LoadState.Loading -> {
+                            binding.moviesRV.gone()
+                            binding.progressBar.show()
+                        }
+                        is LoadState.Error -> {
+                            binding.progressBar.gone()
+                            binding.moviesRV.show()
+                            Snackbar.make(binding.moviesRV, getString(R.string.error_message), Snackbar.LENGTH_LONG).show()
+                        }
                     }
                 }
+
             }
         }
 

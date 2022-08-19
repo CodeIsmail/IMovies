@@ -15,44 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
-    private val movieRepo: IMoviesRepository
+    movieRepo: IMoviesRepository
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(PopularMoviesUIState())
-    val uiState: StateFlow<PopularMoviesUIState> = _uiState.asStateFlow()
+    val popularMovies = movieRepo.getPopularMovies().cachedIn(viewModelScope)
 
-
-
-    fun actionGetMovies() {
-        val response = movieRepo.getPopularMovies().cachedIn(viewModelScope)
-        _uiState.update {
-            it.copy(isLoading = true)
-        }
-        viewModelScope.launch {
-            response.catch {
-                _uiState.update { _errorState ->
-                    _errorState.copy(
-                        userMessages = _errorState.userMessages
-                                + Message(
-                            UUID.randomUUID().mostSignificantBits,
-                            it.message ?: "Error has occurred"
-                        ), isLoading = false
-                    )
-                }
-            }
-                .collect {
-                    _uiState.update { _successState ->
-                        _successState.copy(movies = it, isLoading = false)
-                    }
-                }
-        }
-    }
-
-    fun updateUserMessage(id: Long) {
-        _uiState.update { currentUiState ->
-            val messages = currentUiState.userMessages.filterNot { it.id == id }
-            currentUiState.copy(userMessages = messages)
-        }
-    }
 
 }

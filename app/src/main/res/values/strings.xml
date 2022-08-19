@@ -14,4 +14,5 @@
     <string name="popular_movies_detail_fragment_label">Popular Movies Detail Fragment</string>
     <string name="popular_movies_title">Popular Movies</string>
     <string name="popular_movie_detail_title">Movie Detail</string>
+    <string name="error_message">Failed to get movies</string>
 </resources>
